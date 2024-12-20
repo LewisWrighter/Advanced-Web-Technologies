@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workout History - FitMotive</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background-color: #292929;
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .header {
+            background-color: #3b3b3b;
+            padding: 20px;
+            border-bottom: 2px solid #e65a50;
+            border-radius: 0 0 15px 15px;
+            position: sticky;
+            top: 0;
+            z-index: 2;
+        }
+        .header h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 38px;
+            color: #e65a50;
+            text-align: center;
+            margin: 0;
+        }
+        .btn-back {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            border: 2px solid #e65a50;
+            padding: 10px;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 16px;
+            text-decoration: none;
+            color: #e65a50;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .btn-back:hover {
+            background-color: #e65a50;
+            color: #fff;
+        }
+        .main-content {
+            margin: 40px auto;
+            width: 90%;
+            max-width: 800px;
+            background: rgba(59, 59, 59, 0.9);
+            border-radius: 15px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+        }
+        .main-content h2 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 32px;
+            color: #fff;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        .workout-table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        .workout-table th, .workout-table td {
+            padding: 12px;
+            border: 1px solid #555;
+            text-align: center;
+            font-size: 14px;
+        }
+        .workout-table th {
+            background-color: #2c2c2c;
+            color: #e65a50;
+            font-weight: bold;
+        }
+        .workout-table tr:nth-child(even) {
+            background-color: #2c2c2c;
+        }
+        .workout-table tr:nth-child(odd) {
+            background-color: #3b3b3b;
+        }
+        .empty-message {
+            color: #bdbdbd;
+            text-align: center;
+            font-style: italic;
+            padding: 10px;
+        }
+        footer {
+            background-color: #2c2c2c;
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+            color: #fff;
+            border-radius: 0 0 15px 15px;
+        }
+        .background-graphic {
+            position: absolute;
+            top: 50%;
+            right: 200px;
+            transform: translateY(-50%);
+            width: 450px;
+            opacity: 0.1;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <a href="/home" class="btn-back">Back</a>
+        <h1>Workout History</h1>
+    </div>
+    <div class="main-content">
+        <h2>Your Logged Workouts</h2>
+        <table class="workout-table">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Exercise</th>
+                    <th>Duration (min)</th>
+                    <th>Calories Burned</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% if workouts %}
+                    {% for workout in workouts %}
+                    <tr>
+                        <td>{{ workout.date.strftime('%d/%m/%Y') }}</td>
+                        <td>{{ workout.exercise }}</td>
+                        <td>{{ workout.duration }}</td>
+                        <td>{{ workout.calories if workout.calories else 'N/A' }}</td>
+                    </tr>
+                    {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="empty-message">No workouts logged yet.</td>
+                    </tr>
+                {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <footer>
+        Stay Strong. Stay Motivated!
+    </footer>
+    <img src="{{ url_for('static', filename='images/runningman.png') }}" alt="Running Man Graphic" class="background-graphic">
+</body>
+</html>

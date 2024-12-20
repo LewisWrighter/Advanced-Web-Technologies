@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitMotive | Timer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Roboto', sans-serif;
+            background: #2c2c2c;
+            color: #fff;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .wrapper {
+            width: 90%;
+            max-width: 600px;
+            background: #3a3a3a;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            position: relative;
+        }
+        h1 {
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 40px;
+            color: #e63946;
+            margin-bottom: 20px;
+            letter-spacing: 1.2px;
+        }
+        .timer-display {
+            font-size: 48px;
+            color: #e63946;
+            margin: 15px 0;
+            font-family: 'Bebas Neue', sans-serif;
+        }
+        .input-group {
+            margin: 15px 0;
+        }
+        label {
+            display: block;
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            background: #333;
+            border: 1px solid #555;
+            color: white;
+            font-size: 14px;
+        }
+        .timer-actions {
+            margin-top: 20px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .timer-actions button {
+            width: 30%;
+            padding: 10px;
+            font-size: 18px;
+            background: #e63946;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Bebas Neue', sans-serif;
+        }
+        .timer-actions button:hover {
+            background: #c53030;
+        }
+        .links {
+            margin-top: 15px;
+        }
+        .links a {
+            text-decoration: none;
+            color: #e63946;
+            font-weight: bold;
+            font-family: 'Roboto', sans-serif;
+            font-size: 14px;
+        }
+        .links a:hover {
+            text-decoration: underline;
+        }
+        .go-back {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            border: 2px solid #e63946;
+            padding: 10px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-family: 'Bebas Neue', sans-serif;
+            font-size: 18px;
+            color: #e63946; 
+            transition: 0.3s;
+        }
+        .go-back:hover {
+            background: #e63946;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <a href="/home" class="go-back">Back</a>
+    <div class="wrapper">
+        <h1>Workout Timer</h1>
+        <div class="timer-display" id="display">00:00</div>
+        <div class="input-group">
+            <label for="duration">Set Timer Duration (Minutes):</label>
+            <input type="number" id="duration" min="1" placeholder="Enter time in minutes">
+        </div>
+        <div class="timer-actions">
+            <button onclick="startTimer()">Start</button>
+            <button onclick="pauseTimer()">Pause</button>
+            <button onclick="resetTimer()">Reset</button>
+        </div>
+        <div class="links">
+            <a href="/workout_history">View Workout History</a>
+        </div>
+    </div>
+    <script>
+        // Declare variables for countdown, running state, and remaining seconds
+        let countdownInterval;
+        let timerRunning = false;
+        let remainingSeconds = 0;
+
+        // Function to format time in MM:SS format
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            return `${minutes < 10 ? '0' : ''}${minutes}:${secs < 10 ? '0' : ''}${secs}`;
+        }
+
+        // Function to update the timer display
+        function updateTimerDisplay() {
+            document.getElementById('display').innerText = formatTime(remainingSeconds);
+        }
+
+        // Function to start the countdown
+        function startTimer() {
+            if (timerRunning) return; // Prevent multiple intervals
+
+            if (remainingSeconds === 0) {
+                const inputMinutes = parseInt(document.getElementById('duration').value, 10);
+                if (!isNaN(inputMinutes) && inputMinutes > 0) {
+                    remainingSeconds = inputMinutes * 60; // Convert minutes to seconds
+                } else {
+                    alert('Enter a valid time');
+                    return;
+                }
+            }
+
+            timerRunning = true;
+            countdownInterval = setInterval(() => {
+                if (remainingSeconds <= 0) {
+                    clearInterval(countdownInterval);
+                    timerRunning = false;
+                    alert('Workout Complete!');
+                } else {
+                    remainingSeconds--;
+                    updateTimerDisplay();
+                }
+            }, 1000); // Update every second
+        }
+
+        // Function to pause the countdown
+        function pauseTimer() {
+            clearInterval(countdownInterval);
+            timerRunning = false;
+        }
+
+        // Function to reset the countdown
+        function resetTimer() {
+            clearInterval(countdownInterval);
+            timerRunning = false;
+            remainingSeconds = 0;
+            updateTimerDisplay();
+        }
+
+        // Initialise the timer display when the document is loaded
+        document.addEventListener('DOMContentLoaded', updateTimerDisplay);
+    </script>
+</body>
+</html>
+
