@@ -57,10 +57,3 @@ The most **technically demanding** aspects of the project were:
 
 Despite some **time constraints and feature cuts**, I’m **proud** of the final result and excited to explore **Flask** further in future projects!  
 
----
-
-## 📚 **Resources & References**  
-📌 **[DigitalOcean – Flask Authentication](https://www.digitalocean.com/community/tutorials/how-to-add-authentication-to-your-app-with-flask-login)**  
-📌 **[Stack Overflow – Password Hashing Issue](https://stackoverflow.com/questions/73274934/getting-error-when-generating-password-hash-in-flask)**  
-📌 **[Stack Overflow – Flask Authentication Errors](https://stackoverflow.com/questions/73179775/why-am-i-receiving-werkzeug-builderror-in-my-flask-app-when-i-add-authentication)**  
-
